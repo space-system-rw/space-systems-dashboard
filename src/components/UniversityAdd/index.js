@@ -68,13 +68,13 @@ const UniversityAdd = () => {
                 });
 
                 toaster('University added successfully!', 'success');
-
-                console.log(response.data.data);
+                
+                setTimeout(() => {
+                    // history.push(`/`);
+                    window.location.reload();
+                }, 2000);    
                 addUniversities(response.data.data);
 
-                // setTimeout(() => {
-                //     history.push(`/`);
-                // }, 2000);    
 
             };
         } catch (error) {
@@ -105,7 +105,6 @@ const UniversityAdd = () => {
                             name="name"
                             value={values.name}
                             onChange={handleChange('name')}
-                            // onFocus={handlePhoneUpdate}
                         />
                     </FormControl>
                     <FormControl className="form" fullWidth variant="outlined" style={{ width: '200px', margin: '0 5px' }} >
@@ -126,7 +125,6 @@ const UniversityAdd = () => {
                             name="location"
                             value={values.location}
                             onChange={handleChange('location')}
-                            // onFocus={handleConfirmPasswordChange}
                         />
                     </FormControl>
                     <FormControl className="form" fullWidth variant="outlined" style={{ width: '180px', margin: '0 5px' }} >
@@ -134,11 +132,9 @@ const UniversityAdd = () => {
                         <OutlinedInput
                             type="number"
                             labelWidth={70}
-                            // error={(!state.passwordValid && state.confirmPasswordFocus) || state.fieldsRequired}
                             name="location"
                             value={values.fees}
                             onChange={handleChange('fees')}
-                            // onFocus={handleConfirmPasswordChange}
                         />
                     </FormControl>
                         

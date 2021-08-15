@@ -1,78 +1,63 @@
-import React, { useContext, useState } from 'react';import {
-    Button, FormControl, InputLabel, OutlinedInput
+import React, { useEffect, useState } from 'react';import {
+    Button, Card, FormControl, InputLabel, OutlinedInput
 } from '@material-ui/core';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
 import toaster from '../../helpers/toast';
 import { toast, ToastContainer, Zoom } from 'react-toastify';
+import { useHistory, useParams } from 'react-router-dom';
+
+import api from '../../api';
 import Footer from '../../common/Footer';
 import Header1 from '../../common/Header1';
-import { useParams } from 'react-router-dom';
 
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: grey[600],
-        }
-    },
-});
+import './UniversityUpdate.css';
 
 const UniversityUpdate = () => {
+    let history = useHistory();
 
     const { id } = useParams();
 
-    console.log(id);
+    const [name, setName] = useState('');
+    const [website, setWebsite] = useState('');
+    const [location, setLocation] = useState('');
+    const [fees, setFees] = useState('');
 
-    const [values, setValues] = useState({
-        name: '',
-        website: '',
-        location: '',
-        fees: '',
-    });
+    useEffect(() => {
+        const getOneUniversity = async () => {
+            try {
+                const response = await api.get(`/${id}`, {
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'Application/json',
+                    }
+                });
 
-    const handleChange = (props) => (event) => {
-        setValues({ ...values, [props]: event.target.value });
-    };
+                setName(response.data.existingUniversity.name);
+                setWebsite(response.data.existingUniversity.website);
+                setLocation(response.data.existingUniversity.location);
+                setFees(response.data.existingUniversity.fees);
+            } catch (error) {
+                console.log('Error occured during fetching API.');
+            }
+        };
+
+        getOneUniversity();
+    }, [ id, setName, setWebsite, setLocation, setFees ]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // const { name, website, location, fees } = values;
+            await api.put(`/${id}`, {
+                name,
+                website,
+                location,
+                fees
+            });
 
-            // if (name === '') {
-            //     toaster('Name is required!', 'warn');
-            //     return false;
-            // }
-            // else if (website === '') {
-            //     toaster('Website is required!', 'warn');
-            //     return false;
-            // }
-            // else if (location === '') {
-            //     toaster('Location is required!', 'warn');
-            //     return false;
-            // }
-            // else if (fees === '') {
-            //     toaster('Fees is required!', 'warn');
-            //     return false;
-            // }
-            // else {
-                // const response = await api.post('/', {
-                //     name,
-                //     website,
-                //     location,
-                //     fees
-                // });
+            toaster('University updated successfully!', 'success');
 
-                // toaster('University added successfully!', 'success');
-
-                // console.log(response.data.data);
-                // addUniversities(response.data.data);
-
-                // setTimeout(() => {
-                //     history.push(`/`);
-                // }, 2000);    
-
-            // };
+            setTimeout(() => {
+                history.push(`/`);
+            }, 2000);    
         } catch (error) {
             toaster(error, 'Internal server error!');
         }
@@ -87,66 +72,68 @@ const UniversityUpdate = () => {
                 autoClose={3000}
                 position={toast.POSITION.TOP_RIGHT}
             />
-                <div className="formWrapper">
-                <ThemeProvider
-                    theme={theme}
-                >
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '400px', margin: '0 5px' }} >
-                        <InputLabel
-                            className="name"
-                            htmlFor="outlined-name">Name
-                        </InputLabel>
-                        <OutlinedInput
-                            type="text"
-                            labelWidth={50}
-                            name="name"
-                            value={values.name}
-                            onChange={handleChange('name')}
-                            // onFocus={handlePhoneUpdate}
-                        />
-                    </FormControl>
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '200px', margin: '0 5px' }} >
-                        <InputLabel className="website" htmlFor="outlined-website">Website</InputLabel>
-                        <OutlinedInput
-                            type="text"
-                            labelWidth={60}
-                            name="website"
-                            value={values.website}
-                            onChange={handleChange('website')}
-                        />
-                    </FormControl>
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '300px', margin: '0 5px' }} >
-                        <InputLabel className="location" htmlFor="outlined-location">Location</InputLabel>
-                        <OutlinedInput
-                            type="text"
-                            labelWidth={65}
-                            name="location"
-                            value={values.location}
-                            onChange={handleChange('location')}
-                            // onFocus={handleConfirmPasswordChange}
-                        />
-                    </FormControl>
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '180px', margin: '0 5px' }} >
-                        <InputLabel className="location" htmlFor="outlined-fees">Fees in $</InputLabel>
-                        <OutlinedInput
-                            type="number"
-                            labelWidth={70}
-                            // error={(!state.passwordValid && state.confirmPasswordFocus) || state.fieldsRequired}
-                            name="location"
-                            value={values.fees}
-                            onChange={handleChange('fees')}
-                            // onFocus={handleConfirmPasswordChange}
-                        />
-                    </FormControl>
-                        
-                    <Button variant="contained" color="primary" className="submit"
-                        style={{ fontSize: '12px', width: '150px' }}
-                        onClick={handleSubmit}
-                    >
-                        Add University
-                    </Button>
-                </ThemeProvider>
-            </div>
+            <Card className='Card'>
+                    <div className="formWrapper1">
+                        <FormControl className="form1" fullWidth variant="outlined" 
+                            style={{ width: '80%', margin: '15px auto' }}
+                        >
+                            <InputLabel
+                                className="name"
+                                htmlFor="outlined-name">Name
+                            </InputLabel>
+                            <OutlinedInput
+                                type="text"
+                                labelWidth={50}
+                                name="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </FormControl>
+                        <FormControl className="form1" fullWidth variant="outlined" 
+                            style={{ width: '80%', margin: '15px auto' }}
+                        >
+                            <InputLabel className="website" htmlFor="outlined-website">Website</InputLabel>
+                            <OutlinedInput
+                                type="text"
+                                labelWidth={60}
+                                name="website"
+                                value={website}
+                                onChange={(e) => setWebsite(e.target.value)}
+                            />
+                        </FormControl>
+                        <FormControl className="form1" fullWidth variant="outlined" 
+                            style={{ width: '80%', margin: '15px auto' }}
+                        >
+                            <InputLabel className="location" htmlFor="outlined-location">Location</InputLabel>
+                            <OutlinedInput
+                                type="text"
+                                labelWidth={65}
+                                name="location"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                            />
+                        </FormControl>
+                        <FormControl className="form1" fullWidth variant="outlined" 
+                            style={{ width: '80%', margin: '15px auto' }}
+                        >
+                            <InputLabel className="location" htmlFor="outlined-fees">Fees in $</InputLabel>
+                            <OutlinedInput
+                                type="number"
+                                labelWidth={70}
+                                name="location"
+                                value={fees}
+                                onChange={(e) => setFees(e.target.value)}
+                            />
+                        </FormControl>
+                            
+                        <Button variant="contained" color="primary" className="submit"
+                            style={{ fontSize: '20px', width: '80%', margin: '25px auto 50px auto', height: '50px' }}
+                            onClick={handleSubmit}
+                        >
+                            Update University
+                        </Button>
+                </div>
+            </Card>
             <Footer />
         </>
     )

@@ -45,7 +45,7 @@ const UniversityList = (props) => {
     
     const classes = useStyles();
 
-    const { universities, setUniversities } =useContext(UniversityContext);
+    const { universities, setUniversities } = useContext(UniversityContext);
         
     useEffect(() => {
         const getUniversities = async () => {
