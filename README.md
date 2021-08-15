@@ -1,3 +1,6 @@
+space-systems-dashboard
+This is an application built with React, React-Hooks (Context), and Material UI.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
