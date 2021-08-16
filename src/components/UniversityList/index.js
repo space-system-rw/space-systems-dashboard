@@ -11,7 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import api from '../../api';
-import { UniversityContext } from '../../context/UniversiityContext';
+import { UniversityContext } from '../../context/UniversityContext';
 import toaster from '../../helpers/toast';
 import { useHistory } from 'react-router-dom';
 
@@ -66,11 +66,17 @@ const UniversityList = (props) => {
         getUniversities();
     }, [ setUniversities ]);
 
-    const handleUpdate = async (id) => {
+    const handleUniversitySelect = async (id) => {
+        history.push(`/university/${id}`);
+    };
+
+    const handleUpdate = async (e, id) => {
+        e.stopPropagation();
         history.push(`/university/${id}/update`);
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (e, id) => {
+        e.stopPropagation();
         try {
             await api.delete(`/${id}`, {
                 method: 'post',
@@ -103,7 +109,10 @@ const UniversityList = (props) => {
                     </TableHead>
                     <TableBody>
                         { universities && universities.map((university) => (
-                            <StyledTableRow key={university.id}>
+                            <StyledTableRow
+                                key={university.id}
+                                onClick= {() => handleUniversitySelect(university.id)}
+                            >
                                 <StyledTableCell component="th" scope="row">
                                     {university.name}
                                 </StyledTableCell>
@@ -113,10 +122,9 @@ const UniversityList = (props) => {
                                 <StyledTableCell align="right">
                                     <Button
                                         variant="contained"
-                                        // color="primary"
                                         style={{ background: 'orange', color: 'white' }}
                                         className={classes.action}
-                                        onClick={() => handleUpdate(university.id)}
+                                        onClick={(e) => handleUpdate(e, university.id)}
                                     >
                                         Update
                                     </Button>
@@ -124,10 +132,9 @@ const UniversityList = (props) => {
                                 <StyledTableCell align="right">
                                 <Button
                                     variant="contained"
-                                    // color="primary"
                                     style={{ background: 'red', color: 'white' }}
                                     className={classes.action}
-                                    onClick={() => handleDelete(university.id)}
+                                    onClick={(e) => handleDelete(e, university.id)}
                                 >
                                     Delete
                                 </Button>

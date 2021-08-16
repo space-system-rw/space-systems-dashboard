@@ -11,7 +11,7 @@ import { toast, ToastContainer, Zoom } from 'react-toastify';
 import api from '../../api';
 
 import './UniversityAdd.css';
-import { UniversityContext } from '../../context/UniversiityContext';
+import { UniversityContext } from '../../context/UniversityContext';
 
 const theme = createMuiTheme({
     palette: {
@@ -69,11 +69,11 @@ const UniversityAdd = () => {
 
                 toaster('University added successfully!', 'success');
                 
+                addUniversities(response.data.data);
                 setTimeout(() => {
                     // history.push(`/`);
                     window.location.reload();
                 }, 2000);    
-                addUniversities(response.data.data);
 
 
             };

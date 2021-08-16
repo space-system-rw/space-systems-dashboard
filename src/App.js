@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Routes from './routes';
 import './App.css';
 
-import { UniversityContextProvider } from './context/UniversiityContext';
+import { UniversityContextProvider } from './context/UniversityContext';
 
 export class App extends Component {
     render() {
