@@ -79,7 +79,7 @@ const UniversityList = (props) => {
         e.stopPropagation();
         try {
             await api.delete(`/${id}`, {
-                method: 'post',
+                method: 'delete',
                 headers: {
                     'Content-Type': 'Application/json'
                 }
@@ -103,26 +103,33 @@ const UniversityList = (props) => {
                             <StyledTableCell align="right">Website</StyledTableCell>
                             <StyledTableCell align="right">Location</StyledTableCell>
                             <StyledTableCell align="right">Fees</StyledTableCell>
+                            <StyledTableCell align="right">Ratings</StyledTableCell>
                             <StyledTableCell align="right">Edit</StyledTableCell>
                             <StyledTableCell align="right">Delete</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        { universities && universities.map((university) => (
+                        {universities[0] === undefined ? 
+                            <StyledTableRow style={{ marginLeft: 15 }}>
+                                <StyledTableCell>
+                                    No data!
+                                </StyledTableCell>
+                            </StyledTableRow>
+                            :
+                            universities.map((university) => (
                             <StyledTableRow
                                 key={university.id}
                                 onClick= {() => handleUniversitySelect(university.id)}
                             >
-                                <StyledTableCell component="th" scope="row">
-                                    {university.name}
-                                </StyledTableCell>
+                                <StyledTableCell component="th" scope="row">{university.name}</StyledTableCell>
                                 <StyledTableCell align="right">{university.website}</StyledTableCell>
                                 <StyledTableCell align="right">{university.location}</StyledTableCell>
                                 <StyledTableCell align="right">{university.fees}</StyledTableCell>
+                                <StyledTableCell align="right">4</StyledTableCell>
                                 <StyledTableCell align="right">
                                     <Button
                                         variant="contained"
-                                        style={{ background: 'orange', color: 'white' }}
+                                        style={{ background: 'orange', color: 'white', fontSize: 12 }}
                                         className={classes.action}
                                         onClick={(e) => handleUpdate(e, university.id)}
                                     >
@@ -132,7 +139,7 @@ const UniversityList = (props) => {
                                 <StyledTableCell align="right">
                                 <Button
                                     variant="contained"
-                                    style={{ background: 'red', color: 'white' }}
+                                    style={{ background: 'red', color: 'white', fontSize: 12 }}
                                     className={classes.action}
                                     onClick={(e) => handleDelete(e, university.id)}
                                 >

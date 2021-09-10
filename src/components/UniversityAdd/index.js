@@ -3,8 +3,6 @@ import React, { useContext, useState } from 'react';
 import {
     Button, FormControl, InputLabel, OutlinedInput
 } from '@material-ui/core';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
 
 import toaster from '../../helpers/toast';
 import { toast, ToastContainer, Zoom } from 'react-toastify';
@@ -12,14 +10,6 @@ import api from '../../api';
 
 import './UniversityAdd.css';
 import { UniversityContext } from '../../context/UniversityContext';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: grey[600],
-        }
-    },
-});
 
 const UniversityAdd = () => {
 
@@ -91,60 +81,56 @@ const UniversityAdd = () => {
             position={toast.POSITION.TOP_RIGHT}
         />
             <div className="formWrapper">
-                <ThemeProvider
-                    theme={theme}
+                <FormControl className="form" fullWidth variant="outlined" style={{ width: '400px', margin: '0 5px' }} >
+                    <InputLabel
+                        className="name"
+                        htmlFor="outlined-name">Name
+                    </InputLabel>
+                    <OutlinedInput
+                        type="text"
+                        labelWidth={50}
+                        name="name"
+                        value={values.name}
+                        onChange={handleChange('name')}
+                    />
+                </FormControl>
+                <FormControl className="form" fullWidth variant="outlined" style={{ width: '200px', margin: '0 5px' }} >
+                    <InputLabel className="website" htmlFor="outlined-website">Website</InputLabel>
+                    <OutlinedInput
+                        type="text"
+                        labelWidth={60}
+                        name="website"
+                        value={values.website}
+                        onChange={handleChange('website')}
+                    />
+                </FormControl>
+                <FormControl className="form" fullWidth variant="outlined" style={{ width: '300px', margin: '0 5px' }} >
+                    <InputLabel className="location" htmlFor="outlined-location">Location</InputLabel>
+                    <OutlinedInput
+                        type="text"
+                        labelWidth={65}
+                        name="location"
+                        value={values.location}
+                        onChange={handleChange('location')}
+                    />
+                </FormControl>
+                <FormControl className="form" fullWidth variant="outlined" style={{ width: '180px', margin: '0 5px' }} >
+                    <InputLabel className="location" htmlFor="outlined-fees">Fees in $</InputLabel>
+                    <OutlinedInput
+                        type="number"
+                        labelWidth={70}
+                        name="location"
+                        value={values.fees}
+                        onChange={handleChange('fees')}
+                    />
+                </FormControl>
+                    
+                <Button variant="contained" color="primary" className="submit"
+                    style={{ fontSize: '12px', width: '150px' }}
+                    onClick={handleSubmit}
                 >
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '400px', margin: '0 5px' }} >
-                        <InputLabel
-                            className="name"
-                            htmlFor="outlined-name">Name
-                        </InputLabel>
-                        <OutlinedInput
-                            type="text"
-                            labelWidth={50}
-                            name="name"
-                            value={values.name}
-                            onChange={handleChange('name')}
-                        />
-                    </FormControl>
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '200px', margin: '0 5px' }} >
-                        <InputLabel className="website" htmlFor="outlined-website">Website</InputLabel>
-                        <OutlinedInput
-                            type="text"
-                            labelWidth={60}
-                            name="website"
-                            value={values.website}
-                            onChange={handleChange('website')}
-                        />
-                    </FormControl>
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '300px', margin: '0 5px' }} >
-                        <InputLabel className="location" htmlFor="outlined-location">Location</InputLabel>
-                        <OutlinedInput
-                            type="text"
-                            labelWidth={65}
-                            name="location"
-                            value={values.location}
-                            onChange={handleChange('location')}
-                        />
-                    </FormControl>
-                    <FormControl className="form" fullWidth variant="outlined" style={{ width: '180px', margin: '0 5px' }} >
-                        <InputLabel className="location" htmlFor="outlined-fees">Fees in $</InputLabel>
-                        <OutlinedInput
-                            type="number"
-                            labelWidth={70}
-                            name="location"
-                            value={values.fees}
-                            onChange={handleChange('fees')}
-                        />
-                    </FormControl>
-                        
-                    <Button variant="contained" color="primary" className="submit"
-                        style={{ fontSize: '12px', width: '150px' }}
-                        onClick={handleSubmit}
-                    >
-                        Add University
-                    </Button>
-                </ThemeProvider>
+                    Add University
+                </Button>
             </div>
         </>
     )
