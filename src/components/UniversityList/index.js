@@ -1,14 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Rating from '@material-ui/lab/Rating';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
 import api from '../../api';
 import { UniversityContext } from '../../context/UniversityContext';
@@ -125,7 +128,16 @@ const UniversityList = (props) => {
                                 <StyledTableCell align="right">{university.website}</StyledTableCell>
                                 <StyledTableCell align="right">{university.location}</StyledTableCell>
                                 <StyledTableCell align="right">{university.fees}</StyledTableCell>
-                                <StyledTableCell align="right">4</StyledTableCell>
+                                <StyledTableCell align="right">
+                                    <Box component="fieldset" borderColor="transparent">
+                                        <Rating
+                                        name="customized-empty"
+                                        defaultValue={3}
+                                        precision={0.5}
+                                        emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                                        />
+                                    </Box>
+                                </StyledTableCell>
                                 <StyledTableCell align="right">
                                     <Button
                                         variant="contained"
