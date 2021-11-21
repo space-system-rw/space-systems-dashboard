@@ -4,43 +4,47 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Rating from '@material-ui/lab/Rating';
-import { UniversityContext } from '../../context/UniversityContext';
+// import { UniversityContext } from '../../context/UniversityContext';
 import Footer from '../../common/Footer';
-import api from '../../api';
+// import api from '../../api';
 
 import './UniversityDetails.css';
 
 const UniversityDetails = () => {
 
     const { id } = useParams();
-    const { selectedUniversity, setSelectedUniversity } = useContext(UniversityContext);
+    // const { selectedUniversity, setSelectedUniversity } = useContext(UniversityContext);
 
-    useEffect(() => {
-        const getOneUniversity = async () => {
-            try {
-                const response = await api.get(`/${id}`, {
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'Application/json',
-                    }
-                });
+    // useEffect(() => {
+    //     const getOneUniversity = async () => {
+    //         try {
+    //             const response = await api.get(`/${id}`, {
+    //                 method: 'get',
+    //                 headers: {
+    //                     'Content-Type': 'Application/json',
+    //                 }
+    //             });
 
-                setSelectedUniversity(response.data.existingUniversity);
-            } catch (error) {
-                console.log('Error occured during fetching API.');
-            }
-        };
+    //             setSelectedUniversity(response.data.existingUniversity);
+    //         } catch (error) {
+    //             console.log('Error occured during fetching API.');
+    //         }
+    //     };
 
-        getOneUniversity();
-    }, [ id, selectedUniversity, setSelectedUniversity ]);
+    //     getOneUniversity();
+    // }, [ id, selectedUniversity, setSelectedUniversity ]);
 
     return (
         <>
             <div className='header-wrapper'>
-                <h1 className='header font-weight-light display-1 text-center'>{selectedUniversity && selectedUniversity.name}</h1>
-                <p className=''>University Website: {selectedUniversity && selectedUniversity.website}</p>
-                <p className=''>Location: {selectedUniversity && selectedUniversity.location}</p>
-                <p className=''>School fees: $ {selectedUniversity && selectedUniversity.fees} per annum</p>
+                {/* <h1 className='header font-weight-light display-1 text-center'>{selectedUniversity && selectedUniversity.name}</h1> */}
+                <h1 className='header font-weight-light display-1 text-center'>University of People</h1>
+                {/* <p className=''>University Website: {selectedUniversity && selectedUniversity.website}</p> */}
+                <p className=''>University Website: www.uop.ac.edu</p>
+                {/* <p className=''>Location: {selectedUniversity && selectedUniversity.location}</p> */}
+                <p className=''>Location: Kigali</p>
+                {/* <p className=''>School fees: $ {selectedUniversity && selectedUniversity.fees} per annum</p> */}
+                <p className=''>School fees: $ 1800 per annum</p>
 
                 <div>
                     <Box component="fieldset" mb={3} borderColor="transparent">

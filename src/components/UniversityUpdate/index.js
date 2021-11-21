@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';import {
+import React, { useEffect, useState } from 'react';
+import {
     Button, Card, FormControl, InputLabel, OutlinedInput
 } from '@material-ui/core';
 import toaster from '../../helpers/toast';
@@ -21,27 +22,27 @@ const UniversityUpdate = () => {
     const [location, setLocation] = useState('');
     const [fees, setFees] = useState('');
 
-    useEffect(() => {
-        const getOneUniversity = async () => {
-            try {
-                const response = await api.get(`/${id}`, {
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'Application/json',
-                    }
-                });
+    // useEffect(() => {
+    //     const getOneUniversity = async () => {
+    //         try {
+    //             const response = await api.get(`/${id}`, {
+    //                 method: 'get',
+    //                 headers: {
+    //                     'Content-Type': 'Application/json',
+    //                 }
+    //             });
 
-                setName(response.data.existingUniversity.name);
-                setWebsite(response.data.existingUniversity.website);
-                setLocation(response.data.existingUniversity.location);
-                setFees(response.data.existingUniversity.fees);
-            } catch (error) {
-                console.log('Error occured during fetching API.');
-            }
-        };
+    //             setName(response.data.existingUniversity.name);
+    //             setWebsite(response.data.existingUniversity.website);
+    //             setLocation(response.data.existingUniversity.location);
+    //             setFees(response.data.existingUniversity.fees);
+    //         } catch (error) {
+    //             console.log('Error occured during fetching API.');
+    //         }
+    //     };
 
-        getOneUniversity();
-    }, [ id, setName, setWebsite, setLocation, setFees ]);
+    //     getOneUniversity();
+    // }, [ id, setName, setWebsite, setLocation, setFees ]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

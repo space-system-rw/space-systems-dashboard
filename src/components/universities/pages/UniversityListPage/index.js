@@ -1,4 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { listUniversities } from '../../../../actions/universities/universitiesActions';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -13,9 +15,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import api from '../../api';
-import { UniversityContext } from '../../context/UniversityContext';
-import toaster from '../../helpers/toast';
+import api from '../../../../api';
+// import { UniversityContext } from '../../context/UniversityContext';
+import toaster from '../../../../helpers/toast';
 import { useHistory } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme) => ({
@@ -42,32 +44,40 @@ const useStyles = makeStyles({
     },
 });
 
-const UniversityList = (props) => {
-    
+const UniversityListPage = () => {
+    const dispatch = useDispatch();
+    const universitiesList = useSelector(state => state.universitiesList);
+
+    const { loading, message, error, universities } = universitiesList;
+
+    // console.log(`From list page: ${message} ${universities}`);
+
     let history = useHistory();
+
+    useEffect(() => {
+        dispatch(listUniversities());
+    }, [ dispatch ]);
     
     const classes = useStyles();
 
-    const { universities, setUniversities } = useContext(UniversityContext);
-        
-    useEffect(() => {
-        const getUniversities = async () => {
-            try {
-                const response = await api.get('/', {
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'Application/json',
-                    }
-                });
+    // useEffect(() => {
+    //     const getUniversities = async () => {
+    //         try {
+    //             const response = await api.get('/', {
+    //                 method: 'get',
+    //                 headers: {
+    //                     'Content-Type': 'Application/json',
+    //                 }
+    //             });
 
-                setUniversities(response.data.allUniversities);
-            } catch (error) {
-                console.log('Error occured during fetching API.');
-            }
-        };
+    //             setUniversities(response.data.allUniversities);
+    //         } catch (error) {
+    //             console.log('Error occured during fetching API.');
+    //         }
+    //     };
 
-        getUniversities();
-    }, [ setUniversities ]);
+    //     getUniversities();
+    // }, [ setUniversities ]);
 
     const handleUniversitySelect = async (id) => {
         history.push(`/university/${id}`);
@@ -88,7 +98,7 @@ const UniversityList = (props) => {
                 }
             });
 
-            setUniversities(universities.filter((university) => university.id !== id));
+            // setUniversities(universities.filter((university) => university.id !== id));
 
             toaster('University deleted successfully!', 'success');
         } catch (error) {
@@ -112,12 +122,19 @@ const UniversityList = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {universities[0] === undefined ? 
-                            <StyledTableRow style={{ marginLeft: 15 }}>
+                        { loading ?
+                            (<StyledTableRow style={{ marginLeft: 15 }}>
                                 <StyledTableCell>
-                                    No data!
+                                    Loading!
                                 </StyledTableCell>
-                            </StyledTableRow>
+                            </StyledTableRow>)
+                            :
+                            error ?
+                            (<StyledTableRow style={{ marginLeft: 15 }}>
+                                <StyledTableCell>
+                                    {error}!
+                                </StyledTableCell>
+                            </StyledTableRow>)
                             :
                             universities.map((university) => (
                             <StyledTableRow
@@ -160,7 +177,8 @@ const UniversityList = (props) => {
                                     
                                 </StyledTableCell>
                             </StyledTableRow>
-                        ))}
+                        ))
+                    }
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -168,4 +186,4 @@ const UniversityList = (props) => {
     )
 }
 
-export default UniversityList;
+export default UniversityListPage;
