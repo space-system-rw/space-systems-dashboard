@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import { universitiesListReducer } from './universities/universitiesReducer';
+import {
+    universitiesListReducer,
+    universityDetailsReducer
+} from './universities/universitiesReducer';
 
 export default combineReducers({
-    universitiesList: universitiesListReducer
+    universitiesList: universitiesListReducer,
+    universityDetails: universityDetailsReducer
 });

@@ -16,13 +16,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import api from '../../../../api';
-// import { UniversityContext } from '../../context/UniversityContext';
 import toaster from '../../../../helpers/toast';
 import { useHistory } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
-        // backgroundColor: theme.palette.primary,
         color: theme.palette.common.white,
     },
     body: {
@@ -50,8 +48,6 @@ const UniversityListPage = () => {
 
     const { loading, message, error, universities } = universitiesList;
 
-    // console.log(`From list page: ${message} ${universities}`);
-
     let history = useHistory();
 
     useEffect(() => {
@@ -59,25 +55,6 @@ const UniversityListPage = () => {
     }, [ dispatch ]);
     
     const classes = useStyles();
-
-    // useEffect(() => {
-    //     const getUniversities = async () => {
-    //         try {
-    //             const response = await api.get('/', {
-    //                 method: 'get',
-    //                 headers: {
-    //                     'Content-Type': 'Application/json',
-    //                 }
-    //             });
-
-    //             setUniversities(response.data.allUniversities);
-    //         } catch (error) {
-    //             console.log('Error occured during fetching API.');
-    //         }
-    //     };
-
-    //     getUniversities();
-    // }, [ setUniversities ]);
 
     const handleUniversitySelect = async (id) => {
         history.push(`/university/${id}`);
@@ -97,8 +74,6 @@ const UniversityListPage = () => {
                     'Content-Type': 'Application/json'
                 }
             });
-
-            // setUniversities(universities.filter((university) => university.id !== id));
 
             toaster('University deleted successfully!', 'success');
         } catch (error) {
