@@ -1,58 +1,60 @@
-import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { detailsUniversity } from '../../actions/universities/universitiesActions';
+
+import { Link } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Rating from '@material-ui/lab/Rating';
-import { UniversityContext } from '../../context/UniversityContext';
 import Footer from '../../common/Footer';
-import api from '../../api';
 
 import './UniversityDetails.css';
 
-const UniversityDetails = () => {
+const UniversityDetails = ({ match }) => {
 
-    const { id } = useParams();
-    const { selectedUniversity, setSelectedUniversity } = useContext(UniversityContext);
+    const dispatch = useDispatch();
+
+    const universityDetails = useSelector(state => state.universityDetails);
+
+    const { loading, message, error, university } = universityDetails;
 
     useEffect(() => {
-        const getOneUniversity = async () => {
-            try {
-                const response = await api.get(`/${id}`, {
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'Application/json',
-                    }
-                });
-
-                setSelectedUniversity(response.data.existingUniversity);
-            } catch (error) {
-                console.log('Error occured during fetching API.');
-            }
-        };
-
-        getOneUniversity();
-    }, [ id, selectedUniversity, setSelectedUniversity ]);
+        dispatch(detailsUniversity(match.params.id));
+    }, [ dispatch, match ]);
 
     return (
         <>
             <div className='header-wrapper'>
-                <h1 className='header font-weight-light display-1 text-center'>{selectedUniversity && selectedUniversity.name}</h1>
-                <p className=''>University Website: {selectedUniversity && selectedUniversity.website}</p>
-                <p className=''>Location: {selectedUniversity && selectedUniversity.location}</p>
-                <p className=''>School fees: $ {selectedUniversity && selectedUniversity.fees} per annum</p>
+                <Link to="/" style={{ textDecoration: 'none', fontSize: '20px', color: 'grey' }}>
+                    Go Back to Universities
+                </Link>
 
-                <div>
-                    <Box component="fieldset" mb={3} borderColor="transparent">
-                        <Typography component="legend">Ratings</Typography>
-                        <Rating
-                        name="customized-empty"
-                        defaultValue={3}
-                        precision={0.5}
-                        emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                        />
-                    </Box>
-                </div>
+                {
+                    loading ?
+                    (<h1>Loading...</h1>)
+                    :
+                    error ?
+                    (<h1>{error}!</h1>)
+                    :
+                    <div>
+                        <h1 className='header font-weight-light display-1 text-center'>{ university && university.name }</h1>
+                        <p className=''>Website: { university && university.website }</p>
+                        <p className=''>Location: { university && university.location }</p>
+                        <p className=''>School fees: $ 1{ university && university.fees } per annum</p>
+                        <div>
+                            <Box component="fieldset" mb={3} borderColor="transparent">
+                                <Typography component="legend">Ratings</Typography>
+                                <Rating
+                                name="customized-empty"
+                                defaultValue={3}
+                                precision={0.5}
+                                emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                                />
+                            </Box>
+                        </div>
+                    </div>
+                }
             </div>
             <Footer />
         </>

@@ -1,0 +1,13 @@
+.formWrapper {
+    /* background: orange; */
+    width: 80%;
+    margin: auto;
+    display: flex
+    /* text-align: center; */
+};
+
+.form {
+    background: orange;
+    width: 100px;
+    /* display: flex; */
+};

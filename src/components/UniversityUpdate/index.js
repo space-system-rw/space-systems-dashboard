@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';import {
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateUniversity } from '../../actions/universities/universitiesActions';
+import {
     Button, Card, FormControl, InputLabel, OutlinedInput
 } from '@material-ui/core';
 import toaster from '../../helpers/toast';
@@ -13,6 +16,7 @@ import './UniversityUpdate.css';
 
 const UniversityUpdate = () => {
     let history = useHistory();
+    const dispatch = useDispatch();
 
     const { id } = useParams();
 
@@ -43,15 +47,16 @@ const UniversityUpdate = () => {
         getOneUniversity();
     }, [ id, setName, setWebsite, setLocation, setFees ]);
 
-    const handleSubmit = async (e) => {
+    const handleUniversityUpdate = async (e) => {
         e.preventDefault();
+
         try {
-            await api.put(`/${id}`, {
+            dispatch(updateUniversity(id, {
                 name,
                 website,
                 location,
                 fees
-            });
+            }));
 
             toaster('University updated successfully!', 'success');
 
@@ -128,7 +133,7 @@ const UniversityUpdate = () => {
                             
                         <Button variant="contained" color="primary" className="submit"
                             style={{ fontSize: '20px', width: '80%', margin: '25px auto 50px auto', height: '50px' }}
-                            onClick={handleSubmit}
+                            onClick={handleUniversityUpdate}
                         >
                             Update University
                         </Button>

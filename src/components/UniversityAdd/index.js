@@ -9,13 +9,13 @@ import { toast, ToastContainer, Zoom } from 'react-toastify';
 import api from '../../api';
 
 import './UniversityAdd.css';
-import { UniversityContext } from '../../context/UniversityContext';
+// import { UniversityContext } from '../../context/UniversityContext';
 
 const UniversityAdd = () => {
 
     // let history = useHistory();
 
-    const { addUniversities } = useContext(UniversityContext);
+    // const { addUniversities } = useContext(UniversityContext);
 
     const [values, setValues] = useState({
         name: '',
@@ -58,14 +58,6 @@ const UniversityAdd = () => {
                 });
 
                 toaster('University added successfully!', 'success');
-                
-                addUniversities(response.data.data);
-                setTimeout(() => {
-                    // history.push(`/`);
-                    window.location.reload();
-                }, 2000);    
-
-
             };
         } catch (error) {
             toaster(error, 'Internal server error!');
