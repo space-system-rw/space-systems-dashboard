@@ -10,7 +10,10 @@ import {
     UNIVERSITY_CREATE_FAIL,
     UNIVERSITY_DELETE_REQUEST,
     UNIVERSITY_DELETE_SUCCESS,
-    UNIVERSITY_DELETE_FAIL
+    UNIVERSITY_DELETE_FAIL,
+    UNIVERSITY_UPDATE_REQUEST,
+    UNIVERSITY_UPDATE_SUCCESS,
+    UNIVERSITY_UPDATE_FAIL
 } from '../../actions/universities/types';
 
 export const universitiesListReducer = (state = { universities: [] }, action) => {
@@ -51,7 +54,7 @@ export const universityCreateReducer = (state = {}, action) => {
             return { loading: true };
 
         case UNIVERSITY_CREATE_SUCCESS:
-            return { loading: false, message: action.payload.message, university: action.payload.addedUniversity };
+            return { loading: false, success: true, message: action.payload.message, university: action.payload.addedUniversity };
 
         case UNIVERSITY_CREATE_FAIL:
             return { loading: false, error: action.payload };
@@ -71,6 +74,22 @@ export const universityDeleteReducer = (state = {}, action) => {
 
         case UNIVERSITY_DELETE_FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state;
+    }
+};
+
+export const universityUpdateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case UNIVERSITY_UPDATE_REQUEST:
+            return { loading: true };
+
+        case UNIVERSITY_UPDATE_SUCCESS:
+            return { loading: false,  success: true, message: action.payload.message, university: action.payload.updatedUniversity };
+
+        case UNIVERSITY_UPDATE_FAIL:
+                return { loading: false, error: action.payload };
+    
         default:
             return state;
     }

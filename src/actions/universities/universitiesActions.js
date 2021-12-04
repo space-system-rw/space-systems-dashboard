@@ -11,7 +11,10 @@ import {
     UNIVERSITY_CREATE_FAIL,
     UNIVERSITY_DELETE_REQUEST,
     UNIVERSITY_DELETE_SUCCESS,
-    UNIVERSITY_DELETE_FAIL
+    UNIVERSITY_DELETE_FAIL,
+    UNIVERSITY_UPDATE_REQUEST,
+    UNIVERSITY_UPDATE_SUCCESS,
+    UNIVERSITY_UPDATE_FAIL
 } from './types';
 
 export const listUniversities = () => async (dispatch) => {
@@ -97,6 +100,35 @@ export const deleteUniversity = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UNIVERSITY_DELETE_FAIL,
+            payload: error.response && error.response.message
+            ? error.response.message
+            : error.message
+        });
+    }
+};
+
+export const updateUniversity = (id, universityData) => async (dispatch) => {
+    try {
+        dispatch({ type:UNIVERSITY_UPDATE_REQUEST });
+
+        const config = {
+            method: 'put',
+            headers: {
+                'Content-Type': 'Application/json'
+            }
+        };
+
+        const { data } = await api.put(`/${id}`, universityData, config);
+
+        dispatch({
+            type: UNIVERSITY_UPDATE_SUCCESS,
+            payload: data
+        });
+    } catch (error) {
+        console.log(universityData);
+
+        dispatch({
+            type: UNIVERSITY_UPDATE_FAIL,
             payload: error.response && error.response.message
             ? error.response.message
             : error.message

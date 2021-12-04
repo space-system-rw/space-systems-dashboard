@@ -3,12 +3,14 @@ import {
     universitiesListReducer,
     universityCreateReducer,
     universityDeleteReducer,
-    universityDetailsReducer
+    universityDetailsReducer,
+    universityUpdateReducer
 } from './universities/universitiesReducer';
 
 export default combineReducers({
     universitiesList: universitiesListReducer,
     universityDetails: universityDetailsReducer,
     universityCreate: universityCreateReducer,
-    universityDelete: universityDeleteReducer
+    universityDelete: universityDeleteReducer,
+    universityUpdate: universityUpdateReducer
 });

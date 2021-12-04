@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import api from '../../../../api';
 import toaster from '../../../../helpers/toast';
 import { toast, ToastContainer, Zoom } from 'react-toastify';
 import {
@@ -128,21 +127,21 @@ const UniversityListPage = () => {
             toaster(error, 'Internal server error');
         }
     };
-
-    const handleUniversityUpdate = async (e, id) => {
-        e.stopPropagation();
-        history.push(`/university/${id}/update`);
-    };
-
+    
     const handleUniversityDelete = async (e, id) => {
         e.stopPropagation();
         try {
             dispatch(deleteUniversity(id));
-
+            
             toaster('University deleted successfully!', 'success');
         } catch (error) {
             toaster(error, 'Internal server error');
         }
+    };
+    
+    const handleUniversityUpdate = async (e, id) => {
+        e.stopPropagation();
+        history.push(`/university/${id}/update`);
     };
 
     return (
