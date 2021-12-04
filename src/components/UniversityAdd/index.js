@@ -58,14 +58,6 @@ const UniversityAdd = () => {
                 });
 
                 toaster('University added successfully!', 'success');
-                
-                // addUniversities(response.data.data);
-                // setTimeout(() => {
-                //     // history.push(`/`);
-                //     window.location.reload();
-                // }, 2000);    
-
-
             };
         } catch (error) {
             toaster(error, 'Internal server error!');
