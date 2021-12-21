@@ -96,6 +96,7 @@ const UniversityList = (props) => {
             toaster(error, 'Internal server error');
         }
     };
+    // debugging 4
 
     return (
         <>
