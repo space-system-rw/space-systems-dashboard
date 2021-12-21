@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-
+// debugging 1
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -12,7 +12,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
+// debugging 2
 import api from '../../api';
 import { UniversityContext } from '../../context/UniversityContext';
 import toaster from '../../helpers/toast';
@@ -50,6 +50,7 @@ const UniversityList = (props) => {
 
     const { universities, setUniversities } = useContext(UniversityContext);
         
+    // debugging 3
     useEffect(() => {
         const getUniversities = async () => {
             try {
